@@ -1,0 +1,42 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'notes/css/getit.css' %}">
+<div class="appbar">
+    <img src="{% static 'notes/img/logo-getit.png' %}" class='logo' />
+    <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+<main class="container">
+
+
+    <div class="card-container">
+        <div class="card">
+            <form action='/' method='post'>
+                {% csrf_token %}
+                <div class='title-edit-delete-container'>
+                    <textarea name="title" id="title" cols="30" rows="2">{{noteToEdit.title}}</textarea>
+                </div>
+
+                <div class="card-content">
+                    <textarea name="content" id="content" cols="30" rows="10">{{noteToEdit.content}}</textarea>
+                </div>
+                {% csrf_token %}
+                <textarea name='edit' style='display: none'>edit</textarea>
+                <textarea name='id' style='display: none'>{{noteToEdit.id}}</textarea>
+                <button class='btn-remove'
+                    style='color :white; background-color: green; border: 1px solid green; border-radius:5px'
+                    type='submit'>Salvar</button>
+
+            </form>
+
+        </div>
+    </div>
+
+</main>
+
+<script src="{% static 'notes/js/getit.js' %}"></script>
+
+
+{% endblock %}
