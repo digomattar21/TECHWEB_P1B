@@ -22,9 +22,14 @@
                 <div class="card-content">
                     <textarea name="content" id="content" cols="30" rows="10">{{noteToEdit.content}}</textarea>
                 </div>
+
+                <div class="title-edit-delete-container">
+                    <textarea name="tag" id="tag" cols="30" rows="1">Tag: {{noteToEdit.tag.name}}</textarea>
+                </div>
                 {% csrf_token %}
                 <textarea name='edit' style='display: none'>edit</textarea>
                 <textarea name='id' style='display: none'>{{noteToEdit.id}}</textarea>
+                
                 <button class='btn-remove'
                     style='color :white; background-color: green; border: 1px solid green; border-radius:5px'
                     type='submit'>Salvar</button>
