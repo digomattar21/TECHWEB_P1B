@@ -10,18 +10,6 @@
 
   <main class="container">
 
-    <div class='note-input'>
-      <form method='post' class="form-card">
-        {% csrf_token %}
-        <div class='note-input-inside-container'>
-          <input class="form-card-title" id='titulo' type="text" name="titulo" placeholder="Título" />
-          <textarea class="autoresize" name="detalhes" placeholder="Digite o conteúdo..."></textarea>
-          <textarea name="tagName" id="tagName" cols="30" rows="1" placeholder="insira a tag"></textarea>
-          <button class="btn" type="submit">Criar</button>
-  
-        </div>
-      </form>
-    </div>
   
     <div class="card-container">
         {% for note in notes %}
@@ -34,7 +22,7 @@
               <p>{{note.content}}</p>
             </div>
             <div class='btn-container' style='display: flex; flex-direction: row; justify-content:space-evenly; margin-top: 20px;'>
-              <form method='post'>
+              <form action ='/' method='post'>
                 {% csrf_token %}
                 <textarea name='tagName' style='display: none'>{{note.tag.name}}</textarea>               
                 <textarea name='id' style='display: none'>{{note.id}}</textarea>
@@ -59,7 +47,7 @@
         <div class='tags-browser-container'>
             {% for tag in tags %}
             <form method='post' action="/tagDetails">
-              {% csrf_token %}
+                {% csrf_token %}
               <textarea name="tagName" id="tagName" cols="30" rows="1" style='display: none'>{{tag.name}}</textarea>
               <button style='background-color:#017bcd; color:white' type='submit'>{{tag.name}}</button>
             </form>

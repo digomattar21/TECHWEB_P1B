@@ -6,8 +6,6 @@ from .models import Note, Tag
 
 def index(request):
     if request.method == 'POST':
-        
-        # TAREFA: Utilize o title e content para criar um novo Note no banco de dados
         if request.POST.get('edit'):
             title = request.POST.get('title')
             content = request.POST.get('content')
@@ -21,9 +19,10 @@ def index(request):
         elif request.POST.get('id'):
             note = Note.objects.get(id=request.POST.get('id'))
             tagName = request.POST.get('tagName')
-            print('tagName', tagName)
             tag = Tag.objects.filter(name=tagName)
-            if len(tag)<=1: tag.delete()
+            notes = Note.objects.filter(tag__in=tag)
+            if len(notes)<=1: 
+                tag.delete()
             note.delete()
 
         else:
@@ -32,18 +31,18 @@ def index(request):
             tagName = request.POST.get('tagName')
             existingTag = Tag.objects.filter(name=tagName)
             if existingTag:
-                note=Note(title=title,content=content,tagName=tagName)
-                existingTag.note_set.add(note)
+                tag = Tag.objects.get(name=tagName)
+                note=Note(title=title,content=content,tag = tag)
                 note.save()
                 tag.save()
-
-                tag.save()
-                print('exstingtag')
+                
             else:
-                note = Note(title=title,content=content, tagName=tagName)
-                note.save()
-                tag = Tag(name=tagName, note=note)
+                tag = Tag(name=tagName)
                 tag.save()
+                note = Note(title=title,content=content, tag=tag)
+                note.save()
+                
+                
             
 
         return redirect('index')
@@ -56,3 +55,12 @@ def edit(request):
     if request.POST.get('edit'):
         noteToEdit = Note.objects.get(id=request.POST.get('id'))
         return render(request, 'notes/edit.html', {'noteToEdit':noteToEdit})
+
+def tagDetails(request):
+    if request.method == 'POST':
+        tag = Tag.objects.get(name=request.POST.get('tagName'))
+        tags = Tag.objects.all()
+        notes = Note.objects.filter(tag=tag)
+        print(tag)
+        print(notes)
+        return render(request, 'notes/tagDetails.html', {'notes':notes, 'tags':tags})
