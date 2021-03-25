@@ -24,7 +24,8 @@
                 </div>
 
                 <div class="title-edit-delete-container">
-                    <textarea name="tag" id="tag" cols="30" rows="1">Tag: {{noteToEdit.tag.name}}</textarea>
+                    <label for="tag">Tag:</label>
+                    <textarea name="tag" id="tag" cols="30" rows="1">{{noteToEdit.tag.name}}</textarea>
                 </div>
                 {% csrf_token %}
                 <textarea name='edit' style='display: none'>edit</textarea>
