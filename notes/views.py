@@ -9,15 +9,17 @@ def index(request):
         if request.POST.get('edit'):
             title = request.POST.get('title')
             content = request.POST.get('content')
-            print('content',content)
             tagName = request.POST.get('tag')
-            tag = Tag.objects.filter(name=tagName)
-            print('tag',tag)
+            try:
+                tag = Tag.objects.get(name=tagName)
+            except:
+                tag = Tag(name=tagName)
+                tag.save()
             note = Note.objects.filter(id=request.POST.get('id'))
-            print(request.POST.get('id'))
             if title: note.title=title
             if content: note.content=content
-            if tagName: note.tag=tag
+            if tag: 
+                note.tag=tag
             note.save()
             
         elif request.POST.get('id'):
