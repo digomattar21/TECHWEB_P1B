@@ -18,7 +18,7 @@ def index(request):
                 tag = Tag(name=tagName)
                 print(tag)
                 tag.save()
-            note = Note.objects.filter(id=request.POST.get('id'))
+            note = Note.objects.get(id=request.POST.get('id'))
             print(note)
             if title: note.title=title
             if content: note.content=content
