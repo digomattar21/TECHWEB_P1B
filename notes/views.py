@@ -12,7 +12,7 @@ def index(request):
             print('content',content)
             tag = request.POST.get('tag')
             print('tag',tag)
-            note = Note.objects.get(id=request.POST.get('id'))
+            note = Note.objects.filter(id=request.POST.get('id'))
             print(request.POST.get('id'))
             if title: note.title=title
             if content: note.content=content
